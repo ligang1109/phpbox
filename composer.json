@@ -1,0 +1,22 @@
+{
+    "name": "ligang1109/phpbox",
+    "autoload": {
+        "psr-4": {
+            "Phpbox\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    ],
+    "require": {
+        "psr/log": "~1.0",
+        "psr/http-message": "~1.0"
+
+    }
+}
