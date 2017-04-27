@@ -35,7 +35,8 @@ class ServerRequest extends Request implements ServerRequestInterface
         $serverRequest = new ServerRequest($_SERVER);
 
         $uri = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-        $uri .= $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'];
+        $uri .= '://' . $_SERVER['HTTP_HOST'] . ':' . $_SERVER['SERVER_PORT'];
+        $uri .= $_SERVER['REQUEST_URI'];
 
         $serverRequest->withProtocolVersion($_SERVER['SERVER_PROTOCOL'])
                       ->withRequestTarget($_SERVER['REQUEST_URI'])
@@ -48,6 +49,8 @@ class ServerRequest extends Request implements ServerRequestInterface
                 $serverRequest->withHeader($name, $value);
             }
         }
+
+        return $serverRequest;
     }
 
     public function getServerParams()

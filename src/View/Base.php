@@ -2,76 +2,55 @@
 
 namespace Phpbox\View;
 
-/**
- * This is view base
- */
-abstract class Base implements ViewInterface
+abstract class Base
 {/*{{{*/
+    abstract public function assign($key, $value, $secureFilter = true);
+    abstract public function render($viewFile, $appendViewSuffix = true, array $assignData = array());
 
-    /**
-     * view root
-     *
-     * @var string
-     */
     protected $viewRoot = '';
-
-    /**
-     * view suffix
-     * @var string
-     */
     protected $viewSuffix = '';
 
-    /**
-     * {@inheritdoc}
-     */
+    public function __construct($viewRoot, $viewSuffix)
+    {
+        $this->setViewRoot($viewRoot);
+        $this->setViewSuffix($viewSuffix);
+    }
+
     public function setViewRoot($viewRoot)
     {
         $this->viewRoot = rtrim($viewRoot, '/') . '/';
+
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewRoot()
     {
         return $this->viewRoot;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setViewSuffix($viewSuffix)
     {
         $this->viewSuffix = $viewSuffix;
+
+        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewSuffix()
     {
         return $this->viewSuffix;
     }
 
-    /**
-     * get view file with view root
-     *
-     * @param string $viewFile
-     * @param bool $withViewSuffix
-     *
-     * @throws \Exception
-     * @return string
-     */
-    protected function getViewFileWithViewRoot($viewFile, $withViewSuffix)
+    protected function getViewFileWithViewRoot($viewFile, $appendViewSuffix)
     {
         $viewFile = $this->viewRoot . ltrim($viewFile, '/');
-        if (!$withViewSuffix) {
+        if ($appendViewSuffix) {
             $viewFile .= '.' . $this->viewSuffix;
         }
 
         if (!file_exists($viewFile)) {
             throw new \Exception('view file ' . $viewFile . ' not exists');
         }
+
         return $viewFile;
     }
 

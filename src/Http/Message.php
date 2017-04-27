@@ -34,6 +34,8 @@ class Message implements MessageInterface
         // TODO: Implement withProtocolVersion() method.
 
         $this->protocolVersion = $version;
+
+        return $this;
     }
 
     public function getHeaders()
