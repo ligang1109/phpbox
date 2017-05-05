@@ -57,7 +57,7 @@ abstract class Base
     protected function secureFilter(&$value)
     {
         if (is_array($value)) {
-            array_walk_recursive($value, 'secureFilterSimpleValue');
+            array_walk_recursive($value, array($this, 'secureFilterSimpleValue'));
         } else {
             $this->secureFilterSimpleValue($value);
         }
