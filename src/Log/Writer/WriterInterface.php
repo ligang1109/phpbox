@@ -6,7 +6,7 @@
  * @date 2015-08-04
  */
 
-namespace Vine\Component\Log\Writer;
+namespace Phpbox\Log\Writer;
 
 /**
  * Log writer interface

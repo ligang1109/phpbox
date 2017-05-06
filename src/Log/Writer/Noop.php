@@ -1,23 +1,23 @@
 <?php
 /**
-* @file Noop.php
-* @author ligang
-* @version 1.0
-* @date 2015-08-04
+ * @file Noop.php
+ * @author ligang
+ * @version 1.0
+ * @date 2015-08-04
  */
 
-namespace Vine\Component\Log\Writer;
+namespace Phpbox\Log\Writer;
 
 /**
-    * Nothing to do
+ * Nothing to do
  */
 class Noop implements WriterInterface
-{/*{{{*/
+{
 
     /**
-        * {@inheritdoc}
+     * {@inheritdoc}
      */
     public function write($message)
-    {/*{{{*/
-    }/*}}}*/
-}/*}}}*/
+    {
+    }
+}

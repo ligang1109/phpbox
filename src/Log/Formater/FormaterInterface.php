@@ -6,21 +6,21 @@
  * @date 2015-08-04
  */
 
-namespace Vine\Component\Log\Formater;
+namespace Phpbox\Log\Formater;
 
 /**
  * Log formater interface
  */
 interface FormaterInterface
-{/*{{{*/
+{
 
     /**
-        * fmt message use context
-        *
-        * @param $message
-        * @param $context
-        *
-        * @return string
+     * fmt message use context
+     *
+     * @param $message
+     * @param $context
+     *
+     * @return string
      */
     public function fmt($level, $message, array $context = array());
-}/*}}}*/
+}
