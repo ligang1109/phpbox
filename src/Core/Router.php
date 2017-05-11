@@ -39,7 +39,7 @@ class Router
 
     public function findRoute($path)
     {
-        $path = trim(strtolower($path));
+        $path = trim($path);
 
         $route = $this->findRouteByDefined($path);
         if (!empty($route)) {
