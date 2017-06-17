@@ -52,7 +52,7 @@ class Uri implements UriInterface
 
         $uri = '';
         if ($scheme) {
-            $uri .= $scheme . '//';
+            $uri .= $scheme . '://';
         }
 
         $uri .= $this->getAuthority() . $this->getPath();

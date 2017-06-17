@@ -36,9 +36,9 @@ class Result
         return $this;
     }
 
-    public function withError($name, $msg = '')
+    public function withError($name, $msgOrNested = '')
     {
-        $this->errors[$name] = $msg;
+        $this->errors[$name] = $msgOrNested;
 
         return $this;
     }

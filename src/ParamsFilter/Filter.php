@@ -34,13 +34,13 @@ class Filter
         }
 
         $this->paramsConf[$name] = array(
-            'default' => $default,
-            'processFunc' => $processFunc,
-            'checkFunc' => $checkFunc,
-            'errMsg' => $errMsg,
-            'filterNull' => $filterNull,
+            'default'         => $default,
+            'processFunc'     => $processFunc,
+            'checkFunc'       => $checkFunc,
+            'errMsg'          => $errMsg,
+            'filterNull'      => $filterNull,
             'processFuncArgs' => $processFuncArgs,
-            'checkFuncArgs' => $checkFuncArgs,
+            'checkFuncArgs'   => $checkFuncArgs,
         );
 
         return $this;
@@ -62,13 +62,21 @@ class Filter
             }
 
             if (!is_null($conf['processFunc'])) {
-                $value = call_user_func_array($conf['processFunc'], array($value) + $conf['processFuncArgs']);
+                $value = call_user_func_array($conf['processFunc'], array_merge(array($value), $conf['processFuncArgs']));
             }
-            $result->withParam($name, $value);
-            if (!is_null($conf['checkFunc'])) {
-                $valid = call_user_func_array($conf['checkFunc'], array($value) + $conf['checkFuncArgs']);
-                if (!$valid) {
-                    $result->withError($name, $conf['errMsg']);
+
+            if ($value instanceof Result) {
+                $result->withParam($name, $value->getParams());
+                if ($value->hasError()) {
+                    $result->withError($name, $value->getErrors());
+                }
+            } else {
+                $result->withParam($name, $value);
+                if (!is_null($conf['checkFunc'])) {
+                    $valid = call_user_func_array($conf['checkFunc'], array_merge(array($value), $conf['checkFuncArgs']));
+                    if (!$valid) {
+                        $result->withError($name, $conf['errMsg']);
+                    }
                 }
             }
         }

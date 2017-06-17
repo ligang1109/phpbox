@@ -27,10 +27,16 @@ class ResultTest extends TestCase
     {
         $result = new Result();
         $result->withError('name')
-               ->withError('desc', '描述不能为空');
+               ->withError('desc', '描述不能为空')
+               ->withError('data', array(
+                   'text' => '文字不能为空',
+                   'link' => '链接不能为空',
+               ));
 
         $errors = $result->getErrors();
         $this->assertEquals($errors['name'], '');
         $this->assertEquals($errors['desc'], '描述不能为空');
+        $this->assertEquals($errors['data']['text'], '文字不能为空');
+        $this->assertEquals($errors['data']['link'], '链接不能为空');
     }
 }

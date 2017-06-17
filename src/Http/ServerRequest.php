@@ -158,10 +158,29 @@ class ServerRequest extends Request implements ServerRequestInterface
         if (!empty($_FILES)) {
             $uploadedFiles = array();
             foreach ($_FILES as $key => $item) {
-                $fp                  = fopen($item['tmp_name'], 'r+');
-                $stream              = new Stream($fp);
-                $uploadedFiles[$key] = new UploadedFile($stream, $item['name'], $item['type'], $item['error'], $item['size']);
+                if (is_array($item['name'])) {
+                    if (is_string($item['name'][0])) {
+                        foreach ($item['name'] as $i => $name) {
+                            if ($name != '') {
+                                $uploadedFiles[$key][$i] = $this->genUploadedFile($item['tmp_name'][$i], $name, $item['type'][$i], $item['error'][$i], $item['size'][$i]);
+                            }
+                        }
+                    }
+                } else {
+                    if ($item['name'] != '') {
+                        $uploadedFiles[$key] = $this->genUploadedFile($item['tmp_name'], $item['name'], $item['type'], $item['error'], $item['size']);
+                    }
+                }
             }
+            $this->withUploadedFiles($uploadedFiles);
         }
+    }
+
+    private function genUploadedFile($tmpName, $name, $type, $error, $size)
+    {
+        $fp     = fopen($tmpName, 'r+');
+        $stream = new Stream($fp);
+
+        return new UploadedFile($stream, $name, $type, $error, $size);
     }
 }

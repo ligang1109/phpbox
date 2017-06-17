@@ -26,8 +26,12 @@ class GeneralProcessor
         return floatval($value);
     }
 
-    public function processArr($value)
+    public function processArr($value, Filter $filter = null)
     {
+        if (!is_null($filter)) {
+            return $filter->run($value);
+        }
+
         foreach ($value as $k => $v) {
             if (is_array($v)) {
                 $v = $this->processArr($v);

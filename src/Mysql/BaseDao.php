@@ -6,14 +6,12 @@
  * @date 2015-08-06
  */
 
-namespace Phpbox\Mysql\Dao;
-
-use Phpbox\Mysql\Driver;
+namespace Phpbox\Mysql;
 
 /**
  * Dao base
  */
-abstract class Base
+abstract class BaseDao
 {
 
     /**
@@ -29,7 +27,7 @@ abstract class Base
      *
      * @param mixed $hash
      *
-     * @return Base
+     * @return static
      */
     abstract public function setTableName($hash = null);
 
@@ -43,7 +41,7 @@ abstract class Base
      *
      * @param Driver $driver
      *
-     * @return Base
+     * @return static
      */
     public function setDriver(Driver $driver)
     {

@@ -6,7 +6,7 @@
  * @date 2015-08-07
  */
 
-namespace Phpbox\Mysql\Dao;
+namespace Phpbox\Mysql;
 
 class SimpleSqlBuilder
 {
