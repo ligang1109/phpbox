@@ -73,25 +73,25 @@ abstract class BaseDao
 
     /**
      * @param array $filter
-     * @param array $sort   $sort[0] = fieldName, $sort[1] = asc(1|0) eg: $sort = array('name', 1)
+     * @param array $sort $sort[0] = fieldName, $sort[1] = asc(1|0) eg: $sort = array('name', 1)
      * @param int $skip
      * @param int $limit
-     * @param int $projection  fieldName which you want to see, eg: $projection = array('name', 'status')
+     * @param int $projection fieldName which you want to see, eg: $projection = array('name', 'status')
      * @param array $options
      * @return array
      */
     public function find(array $filter, array $sort = array(), $skip = 0, $limit = 0, array $projection = array(), array $options = array())
     {
         if (!empty($sort)) {
-            $field = $sort[0];
-            $asc = isset($sort[1]) && $sort[1] == -1 ? -1 : 1;
+            $field           = $sort[0];
+            $asc             = isset($sort[1]) && $sort[1] == -1 ? -1 : 1;
             $options['sort'] = array($field => $asc);
         }
         if ($skip > 0) {
             $options['skip'] = $skip;
         }
         if ($limit > 0) {
-            $options['limit'] =  $limit;
+            $options['limit'] = $limit;
         }
         if (!empty($projection)) {
             foreach ($projection as $field) {
@@ -105,6 +105,18 @@ abstract class BaseDao
             $result[] = $item;
         }
         return $result;
+    }
+
+    public function count(array $filter, $skip = 0, $limit = 0, array $options = array())
+    {
+        if ($skip > 0) {
+            $options['skip'] = $skip;
+        }
+        if ($limit > 0) {
+            $options['limit'] = $limit;
+        }
+
+        return $this->collection->count($filter, $options);
     }
 
     /**

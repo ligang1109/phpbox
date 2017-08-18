@@ -73,7 +73,7 @@ class MongoDBTest extends TestCase
      * @dataProvider daoProvider
      * @param $dao MiscDao
      */
-    public function testInsertManyFindMany($dao)
+    public function testInsertManyFindManyCount($dao)
     {
         $id1 = Driver::genObjectId();
         $id2 = Driver::genObjectId();
@@ -106,6 +106,9 @@ class MongoDBTest extends TestCase
         $this->assertEquals(count($result), 2);
         $this->assertEquals($result[0]['_id'], $id1);
         $this->assertEquals($result[1]['_id'], $id2);
+
+        $result = $dao->count($filter);
+        var_dump($result);
     }
 
     /**
