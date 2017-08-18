@@ -55,6 +55,11 @@ class Driver
         return new ObjectID($id);
     }
 
+    public static function ObjectIdToString($oid)
+    {
+        return "$oid";
+    }
+
     /**
      * Get MongoDB Client
      *
@@ -92,7 +97,7 @@ class Driver
 
         if (!isset($driverOpts['typeMap'])) {
             $driverOpts['typeMap'] = array(
-                'root' => 'array',
+                'root'     => 'array',
                 'document' => 'array',
             );
         }
