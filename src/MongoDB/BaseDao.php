@@ -73,7 +73,7 @@ abstract class BaseDao
 
     /**
      * @param array $filter
-     * @param array $sort $sort[0] = fieldName, $sort[1] = asc(1|0) eg: $sort = array('name', 1)
+     * @param array $sort $sort[0] = fieldName, $sort[1] = asc(1|-1) eg: $sort = array('name', 1)
      * @param int $skip
      * @param int $limit
      * @param int $projection fieldName which you want to see, eg: $projection = array('name', 'status')
