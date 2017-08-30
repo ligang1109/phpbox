@@ -127,13 +127,14 @@ abstract class BaseDao
      */
     public function updateMany(array $filter, array $fieldsValues, array $options = array())
     {
-        $update['$set'] = $fieldsValues;
+        $update['$set'] = $this->fmtUpdateFields($fieldsValues);
         return $this->collection->updateMany($filter, $update, $options);
     }
 
     public function updateById($idStr, array $fieldsValues, array $options = array())
     {
-        return $this->updateMany(array('_id' => Driver::genObjectId($idStr)), $fieldsValues, $options);
+        $update['$set'] = $this->fmtUpdateFields($fieldsValues);
+        return $this->collection->updateOne(array('_id' => Driver::genObjectId($idStr)), $update, $options);
     }
 
     public function deleteMany(array $filter, array $options = array())
@@ -144,5 +145,27 @@ abstract class BaseDao
     public function deleteById($idStr, array $options = array())
     {
         return $this->deleteMany(array('_id' => Driver::genObjectId($idStr)), $options);
+    }
+
+
+    private function fmtUpdateFields(array $fieldsValues)
+    {
+        $result = array();
+        foreach ($fieldsValues as $key => $value) {
+            $this->fmtUpdateFieldKeyValue($key, $value, $result);
+        }
+
+        return $result;
+    }
+
+    private function fmtUpdateFieldKeyValue($key, $value, &$result)
+    {
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                $this->fmtUpdateFieldKeyValue($key.'.'.$k, $v, $result);
+            }
+        } else {
+            $result[$key] = $value;
+        }
     }
 }
