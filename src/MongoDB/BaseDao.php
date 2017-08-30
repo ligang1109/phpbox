@@ -162,7 +162,7 @@ abstract class BaseDao
     {
         if (is_array($value)) {
             foreach ($value as $k => $v) {
-                $this->fmtUpdateFieldKeyValue($key.'.'.$k, $v, $result);
+                $this->fmtUpdateFieldKeyValue($key . '.' . $k, $v, $result);
             }
         } else {
             $result[$key] = $value;

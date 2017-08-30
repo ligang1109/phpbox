@@ -8,6 +8,7 @@
 
 namespace Phpbox\MongoDB;
 
+use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
 use MongoDB\Database;
 use MongoDB\BSON\ObjectID;
@@ -58,6 +59,20 @@ class Driver
     public static function ObjectIdToString($oid)
     {
         return "$oid";
+    }
+
+    public static function genDate($timestamp = 0)
+    {
+        if ($timestamp === 0) {
+            $timestamp = time();
+        }
+
+        return new UTCDateTime($timestamp * 1000);
+    }
+
+    public static function DateToString(UTCDateTime $odate, $format = 'Y-m-d H:i:s')
+    {
+        return $odate->toDateTime()->format($format);
     }
 
     /**
