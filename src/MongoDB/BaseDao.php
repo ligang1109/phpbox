@@ -11,6 +11,7 @@ namespace Phpbox\MongoDB;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use MongoDB\Collection;
+use MongoDB\BSON\ObjectID;
 
 abstract class BaseDao
 {
@@ -66,9 +67,30 @@ abstract class BaseDao
         return $this->collection->findOne($filter, $options);
     }
 
-    public function findById($idStr, array $options = array())
+    public function findById($id, array $options = array())
     {
-        return $this->findOne(array('_id' => Driver::genObjectId($idStr)), $options);
+        if (!($id instanceof ObjectID)) {
+            $id = Driver::genObjectId($id);
+        }
+
+        return $this->findOne(array('_id' => $id), $options);
+    }
+
+    public function findByIds($ids, array $options = array())
+    {
+        foreach ($ids as $i => $id) {
+            if (!($id instanceof ObjectID)) {
+                $ids[$i] = Driver::genObjectId($id);
+            }
+        }
+
+        $filter = array(
+            '_id' => array(
+                '$in' => $ids,
+            ),
+        );
+
+        return $this->find($filter);
     }
 
     /**
