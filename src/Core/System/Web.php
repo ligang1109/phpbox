@@ -61,6 +61,9 @@ class Web extends Base
 
         try {
             $action->before($this->context);
+            if ($this->context->getData('endDispath')) {
+                return;
+            }
             call_user_func_array(array($action, 'run'), array($this->context) + $actionArgs);
             $action->after($this->context);
         } catch (\Exception $e) {

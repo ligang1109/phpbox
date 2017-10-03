@@ -15,6 +15,7 @@ class WebContext extends Context
 {
     private $request  = null;
     private $response = null;
+    private $data     = array();
 
     public function __construct(ServerRequest $request, Response $response)
     {
@@ -30,5 +31,17 @@ class WebContext extends Context
     public function getResponse()
     {
         return $this->response;
+    }
+
+    public function setData($key, $value)
+    {
+        $this->data[$key] = $value;
+
+        return $this;
+    }
+
+    public function getData($key)
+    {
+        return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 }
