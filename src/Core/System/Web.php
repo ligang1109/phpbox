@@ -61,7 +61,7 @@ class Web extends Base
 
         try {
             $action->before($this->context);
-            if ($this->context->getData('endDispath')) {
+            if ($this->context->getData('endDispatch')) {
                 return;
             }
             call_user_func_array(array($action, 'run'), array($this->context) + $actionArgs);
