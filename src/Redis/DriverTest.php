@@ -9,7 +9,6 @@
 namespace Phpbox\Redis;
 
 use Phpbox\Log\Formater\General;
-use Phpbox\Log\Formater\Noop;
 use Phpbox\Log\Logger;
 use Phpbox\Log\Writer\File;
 use PHPUnit\Framework\TestCase;
